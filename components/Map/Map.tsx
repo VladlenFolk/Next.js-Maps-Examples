@@ -30,7 +30,7 @@ const { YMapClusterer, clusterByGrid } = reactify.module(
 );
 
 export default function Map({ places }) {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const { coordinates, zoom, mapPopupStatus } = useSelector(
     state => state.mapModal
