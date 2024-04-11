@@ -1,16 +1,16 @@
-'use client';
-import React, { useEffect, useCallback, useMemo } from 'react';
-import ReactDOM from 'react-dom';
+"use client";
+import React, { useEffect, useCallback, useMemo } from "react";
+import ReactDOM from "react-dom";
 // import { useDispatch, useSelector } from 'react-redux';
 // import { close, open, getCoordinates, setZoom } from '@/reducers/map/map';
-import CustomMarkerWithPopup from './CustomMarker/CustomMarker';
+import CustomMarkerWithPopup from "./CustomMarker/CustomMarker";
 
 //Данные, получаемые после загрузки скрипта
 const [ymaps3React] = await Promise.all([
   // eslint-disable-next-line no-undef
-  ymaps3.import('@yandex/ymaps3-reactify'),
+  ymaps3.import("@yandex/ymaps3-reactify"),
   // eslint-disable-next-line no-undef
-  ymaps3.ready
+  ymaps3.ready,
 ]);
 const reactify = ymaps3React.reactify.bindTo(React, ReactDOM);
 const {
@@ -20,20 +20,20 @@ const {
   YMapMarker,
   YMapListener,
   YMapLayer,
-  YMapFeatureDataSource
+  YMapFeatureDataSource,
 } =
   // eslint-disable-next-line no-undef
   reactify.module(ymaps3);
 const { YMapClusterer, clusterByGrid } = reactify.module(
   // eslint-disable-next-line no-undef
-  await ymaps3.import('@yandex/ymaps3-clusterer@0.0.1')
+  await ymaps3.import("@yandex/ymaps3-clusterer@0.0.1")
 );
 
 export default function Map({ places }) {
   // const dispatch = useDispatch();
 
   const { coordinates, zoom, mapPopupStatus } = useSelector(
-    state => state.mapModal
+    (state) => state.mapModal
   );
 
   //Замаскировал ошибку, возникающую из-за тега YM
@@ -42,7 +42,7 @@ export default function Map({ places }) {
     // debugger;
     if (
       x.indexOf(
-        'Warning: The tag <ymaps> is unrecognized in this browser. If you meant to render a React component, start its name with an uppercase letter.'
+        "Warning: The tag <ymaps> is unrecognized in this browser. If you meant to render a React component, start its name with an uppercase letter."
       )
     ) {
       return;
@@ -72,7 +72,7 @@ export default function Map({ places }) {
   */
   const createBehaviorEventHandler = useCallback(() => {
     return function (object) {
-      if (object.type === 'dblClick') return;
+      if (object.type === "dblClick") return;
       dispatch(setZoom(object.location.zoom));
       dispatch(getCoordinates(object.location.center));
       closePopup();
@@ -84,18 +84,18 @@ export default function Map({ places }) {
 
   //Функция, в которой перебираем места и добавляем нужные поля
   const points = places.map((point, i) => ({
-    type: 'Feature',
+    type: "Feature",
     id: i,
     geometry: { coordinates: [point.longitude, point.latitude] },
     name_fund: point.name_fund,
     site: point.site,
     address: point.address,
-    properties: { name: 'Point of issue of orders' }
+    properties: { name: "Point of issue of orders" },
   }));
 
   //Функция для создания одиночного маркера
   const marker = useCallback(
-    feature => (
+    (feature) => (
       <CustomMarkerWithPopup
         coordinates={feature.geometry.coordinates}
         popupMapOpen={openPopup}
@@ -103,7 +103,7 @@ export default function Map({ places }) {
         name_fund={feature.name_fund}
         site={feature.site}
         address={feature.address}
-        source={'my-source'}
+        source={"my-source"}
       />
     ),
     []
@@ -118,15 +118,15 @@ export default function Map({ places }) {
       return null;
     }
     return (
-      <YMapMarker coordinates={coordinates} source={'my-source'}>
+      <YMapMarker coordinates={coordinates} source={"my-source"}>
         <div
-          className='circle'
+          className="circle"
           style={
-            mapPopupStatus ? { display: 'none' } : { display: 'inline-block' }
+            mapPopupStatus ? { display: "none" } : { display: "inline-block" }
           }
         >
-          <div className='circle-content'>
-            <span className='circle-text'>{features.length}</span>
+          <div className="circle-content">
+            <span className="circle-text">{features.length}</span>
           </div>
         </div>
       </YMapMarker>
@@ -142,8 +142,8 @@ export default function Map({ places }) {
       <YMapDefaultFeaturesLayer />
       {
         <>
-          <YMapFeatureDataSource id='my-source' />
-          <YMapLayer source='my-source' type='markers' zIndex={1800} />
+          <YMapFeatureDataSource id="my-source" />
+          <YMapLayer source="my-source" type="markers" zIndex={1800} />
           <YMapClusterer
             marker={marker}
             cluster={cluster}
