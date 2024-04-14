@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import style from '@/components/Map/CustomMarker/CustomMarker.module.scss';
 import ReactDOM from 'react-dom';
+import type { YMapLocationRequest } from 'ymaps3';
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getCoordinates } from '@/reducers/map/map';

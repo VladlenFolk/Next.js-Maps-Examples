@@ -1,15 +1,15 @@
 "use client";
 import React, { useEffect, useCallback, useMemo } from "react";
 import ReactDOM from "react-dom";
+import type { YMapLocationRequest } from 'ymaps3';
 // import { useDispatch, useSelector } from 'react-redux';
 // import { close, open, getCoordinates, setZoom } from '@/reducers/map/map';
 import CustomMarkerWithPopup from "./CustomMarker/CustomMarker";
 
+
 //Данные, получаемые после загрузки скрипта
 const [ymaps3React] = await Promise.all([
-  // eslint-disable-next-line no-undef
   ymaps3.import("@yandex/ymaps3-reactify"),
-  // eslint-disable-next-line no-undef
   ymaps3.ready,
 ]);
 const reactify = ymaps3React.reactify.bindTo(React, ReactDOM);
@@ -32,9 +32,9 @@ const { YMapClusterer, clusterByGrid } = reactify.module(
 export default function Map({ places }) {
   // const dispatch = useDispatch();
 
-  const { coordinates, zoom, mapPopupStatus } = useSelector(
-    (state) => state.mapModal
-  );
+  // const { coordinates, zoom, mapPopupStatus } = useSelector(
+  //   (state) => state.mapModal
+  // );
 
   //Замаскировал ошибку, возникающую из-за тега YM
   const realError = console.error;
@@ -59,10 +59,10 @@ export default function Map({ places }) {
 
   //Функции открытия/закрытия попапа, которые хранят состояние в store
   const closePopup = () => {
-    dispatch(close());
+    // dispatch(close());
   };
   const openPopup = () => {
-    dispatch(open());
+    // dispatch(open());
   };
 
   /*Функция, которая отслеживает события внутри карты, setZoom и getCoordinates
@@ -73,8 +73,8 @@ export default function Map({ places }) {
   const createBehaviorEventHandler = useCallback(() => {
     return function (object) {
       if (object.type === "dblClick") return;
-      dispatch(setZoom(object.location.zoom));
-      dispatch(getCoordinates(object.location.center));
+      // dispatch(setZoom(object.location.zoom));
+      // dispatch(getCoordinates(object.location.center));
       closePopup();
     };
   }, []);
@@ -134,7 +134,7 @@ export default function Map({ places }) {
   }, []);
 
   return (
-    <YMap location={{ center: coordinates, zoom: zoom, duration: 500 }}>
+    <YMap location = {{ center: coordinates, zoom: zoom, duration: 500 }}>
       <YMapDefaultSchemeLayer />
       <YMapListener
         onActionEnd={useMemo(() => createBehaviorEventHandler(), [])}
