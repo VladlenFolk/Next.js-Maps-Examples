@@ -29,7 +29,7 @@ const { YMapClusterer, clusterByGrid } = reactify.module(
   await ymaps3.import("@yandex/ymaps3-clusterer@0.0.1")
 );
 
-export default function Map({ places }) {
+export default function Map() {
   // const dispatch = useDispatch();
 
   // const { coordinates, zoom, mapPopupStatus } = useSelector(
