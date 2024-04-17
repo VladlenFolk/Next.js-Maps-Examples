@@ -3,10 +3,10 @@ import style from '@/components/Map/CustomMarker/CustomMarker.module.scss';
 import ReactDOM from 'react-dom';
 import type { YMapLocationRequest } from 'ymaps3';
 import React, { useState, useEffect, useRef } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { getCoordinates } from '@/reducers/map/map';
-import { closePopup } from '@/reducers/auth/reducer';
-import { useMediaQuery } from '@/utils/useMediaQuery';
+// import { useSelector, useDispatch } from 'react-redux';
+// import { getCoordinates } from '@/reducers/map/map';
+// import { closePopup } from '@/reducers/auth/reducer';
+// import { useMediaQuery } from '@/utils/useMediaQuery';
 
 const [ymaps3React] = await Promise.all([
   // eslint-disable-next-line no-undef
@@ -30,48 +30,48 @@ const CustomMarkerWithPopup = ({
 }) => {
   const [popupOpen, setPopupOpen] = useState(false);
 
-  const dispatch = useDispatch();
-  const { zoom, mapPopupStatus } = useSelector(state => state.mapModal);
+  // const dispatch = useDispatch();
+  // const { zoom, mapPopupStatus } = useSelector(state => state.mapModal);
   // const modalStatus = useSelector(state => state.mapModal.);
-  const { targetLocation } = useSelector(state => state.location);
+  // const { targetLocation } = useSelector(state => state.location);
 
-  const desktop = useMediaQuery('(min-width: 1024px)');
+  // const desktop = useMediaQuery('(min-width: 1024px)');
   const containerRef = useRef();
   const imageRef = useRef();
 
   /*При начальной загрузке страницы закрываем все попапы, которые
    которые могли остаться открытыми
   */
-  useEffect(() => {
-    closePopup();
-  }, []);
+  // useEffect(() => {
+  //   closePopup();
+  // }, []);
 
   //Слушатель позволяющий закрывать попап, при клике вне попапа
-  useEffect(() => {
-    const handleOutsideClick = event => {
-      if (
-        containerRef.current &&
-        !containerRef.current.contains(event.target) &&
-        !imageRef.current.contains(event.target)
-      ) {
-        setPopupOpen(false);
-        popupMapClose();
-      }
-    };
-    document.addEventListener('click', handleOutsideClick);
-    return () => {
-      document.removeEventListener('click', handleOutsideClick);
-    };
-  }, [popupMapClose]);
+  // useEffect(() => {
+  //   const handleOutsideClick = event => {
+  //     if (
+  //       containerRef.current &&
+  //       !containerRef.current.contains(event.target) &&
+  //       !imageRef.current.contains(event.target)
+  //     ) {
+  //       setPopupOpen(false);
+  //       popupMapClose();
+  //     }
+  //   };
+  //   document.addEventListener('click', handleOutsideClick);
+  //   return () => {
+  //     document.removeEventListener('click', handleOutsideClick);
+  //   };
+  // }, [popupMapClose]);
 
   
   //Функция корректировки названия места
 
 
   //Если попап открыт, то остальные маркеры удаляются
-  if (mapPopupStatus && !popupOpen) {
-    return null;
-  }
+  // if (mapPopupStatus && !popupOpen) {
+  //   return null;
+  // }
 
   /*
   Данные, которые нужны для корректировки попапа, чтобы при клике
@@ -84,15 +84,15 @@ const CustomMarkerWithPopup = ({
     Функция, которая открывает попап и устанавливает нужные координаты,
     при клике на маркер
   */
-  const setOpen = () => {
-    desktop
-      ? dispatch(
-          getCoordinates([coordinates[0], coordinates[1] + YCoordSpotter])
-        )
-      : dispatch(getCoordinates([coordinates[0], coordinates[1]]));
-    setPopupOpen(true);
-    popupMapOpen();
-  };
+  // const setOpen = () => {
+  //   desktop
+  //     ? dispatch(
+  //         getCoordinates([coordinates[0], coordinates[1] + YCoordSpotter])
+  //       )
+  //     : dispatch(getCoordinates([coordinates[0], coordinates[1]]));
+  //   setPopupOpen(true);
+  //   popupMapOpen();
+  // };
 
   return (
     <YMapMarker coordinates={coordinates} className={style.marker}>
@@ -100,7 +100,7 @@ const CustomMarkerWithPopup = ({
         {popupOpen && (
           <div className={'popup'} ref={containerRef}>
             <h2 className={'popup__title'}>
-              {locationName[targetLocation]} &#171;{name_fund.toUpperCase()}
+              {/* {locationName[targetLocation]} &#171;{name_fund.toUpperCase()} */}
               &#187;
             </h2>
             <div className={'popup__content'}>
@@ -121,12 +121,12 @@ const CustomMarkerWithPopup = ({
                 </p>
               </div>
               <p className={'popup__contentText'}>
-                <a
+                {/* <a
                   href={site}
                   target={'_blank'}
                 >{`Перейти на страницу ${correctWordEnding(
                   locationName[targetLocation]
-                )}`}</a>
+                )}`}</a> */}
               </p>
             </div>
             <button
@@ -145,7 +145,7 @@ const CustomMarkerWithPopup = ({
           className={'point'}
           width={50}
           height={60}
-          onClick={setOpen}
+          // onClick={setOpen}
           ref={imageRef}
         />
       </>
