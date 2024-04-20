@@ -2,9 +2,8 @@
 import React, { useEffect, useCallback, useMemo } from "react";
 import ReactDOM from "react-dom";
 import type { YMapLocationRequest } from "ymaps3";
-// import { useDispatch, useSelector } from 'react-redux';
-// import { close, open, getCoordinates, setZoom } from '@/reducers/map/map';
-import CustomMarkerWithPopup from "./CustomMarker/CustomMarker";
+import { LOCATION } from "@/utils/constants";
+import style from '@/components/Map/Map.module.scss'
 
 //Данные, получаемые после загрузки скрипта
 const [ymaps3React] = await Promise.all([
@@ -20,19 +19,16 @@ const {
   YMapListener,
   YMapLayer,
   YMapFeatureDataSource,
-} =
-  // eslint-disable-next-line no-undef
-  reactify.module(ymaps3);
-const { YMapClusterer, clusterByGrid } = reactify.module(
-  // eslint-disable-next-line no-undef
-  await ymaps3.import("@yandex/ymaps3-clusterer@0.0.1")
-);
+} = reactify.module(ymaps3);
+
 
 export default function Map() {
   return (
-    <YMap location={}>
-      <YMapDefaultSchemeLayer />
-      <YMapDefaultFeaturesLayer />
-    </YMap>
+    <div className={style.mapContainer}>
+      <YMap location={{ center: [37.542824, 55.749451], zoom: 15 }}>
+        <YMapDefaultSchemeLayer />
+        <YMapDefaultFeaturesLayer />
+      </YMap>
+    </div>
   );
 }
