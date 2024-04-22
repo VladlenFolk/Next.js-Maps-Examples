@@ -25,7 +25,7 @@ const {
 export default function Map() {
   return (
     <div className={style.mapContainer}>
-      <YMap location={{ center: [37.542824, 55.749451], zoom: 15 }}>
+      <YMap location={LOCATION}>
         <YMapDefaultSchemeLayer />
         <YMapDefaultFeaturesLayer />
       </YMap>
