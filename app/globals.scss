@@ -109,12 +109,42 @@ a {
 .ymaps3x0--marker {
   width: 55px;
   height: 50px;
-  left: -20px;
+  left: -22.5px;
   top: -50px;
 }
 
 .point {
-  width: 55px;
+  width: 50px;
   height: 50px;
   object-fit: contain;
+}
+
+.circle {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  color: #f49b01;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.7);
+  z-index: 0;
+}
+
+.circle-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 70%;
+  height: 70%;
+  border-radius: 50%;
+  background-color: currentColor;
+  transform: translate3d(-50%, -50%, 0);
+}
+
+.circle-text {
+  font-size: 0.9em;
+  color: #fff;
 }

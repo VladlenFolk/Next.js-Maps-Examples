@@ -10,7 +10,7 @@ const [ymaps3React] = await Promise.all([
 const reactify = ymaps3React.reactify.bindTo(React, ReactDOM);
 const { YMapMarker } = reactify.module(ymaps3);
 
-const CustomMarkerWithPopup = ({ coordinates }) => {
+const CustomMarkerWithPopup = ({ coordinates, name, site, address }) => {
   const [popupOpen, setPopupOpen] = useState(false);
 
   const containerRef = useRef();
