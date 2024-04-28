@@ -105,3 +105,16 @@ a {
     color-scheme: dark;
   }
 }
+
+.ymaps3x0--marker {
+  width: 55px;
+  height: 50px;
+  left: -20px;
+  top: -50px;
+}
+
+.point {
+  width: 55px;
+  height: 50px;
+  object-fit: contain;
+}

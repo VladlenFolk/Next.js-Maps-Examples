@@ -1,13 +1,12 @@
-// 'use client'
+'use client'
 import styles from "./page.module.css";
 import dynamic from "next/dynamic";
 import { YMapLoader } from "@/components/Map/YMapLoader";
-import Some from "@/components/Some/some";
+import YMapContainer from "@/components/YMapContainer/YMapContainer";
 export default function Home() {
   return (
     <main className={styles.main}>
-      <Some />
-      <YMapLoader />
+      <YMapContainer/>
     </main>
   );
 }

@@ -5,6 +5,7 @@ import type { YMapLocationRequest } from "ymaps3";
 import { LOCATION } from "@/utils/constants";
 import style from "@/components/Map/Map.module.scss";
 import Image from "next/image";
+import CustomMarkerWithPopup from "@/components/YMapMarker/YMapMarker";
 
 //Данные, получаемые после загрузки скрипта
 const [ymaps3React] = await Promise.all([
@@ -28,14 +29,7 @@ export default function Map() {
       <YMap location={LOCATION}>
         <YMapDefaultSchemeLayer />
         <YMapDefaultFeaturesLayer />
-        <YMapMarker coordinates={[37.504314, 55.73025]}>
-          <Image
-            src={"/blue-marker.png"}
-            alt={"museum"}
-            width={50}
-            height={50}
-          ></Image>
-        </YMapMarker>
+        <CustomMarkerWithPopup coordinates={[37.504062,55.730588]} />
       </YMap>
     </div>
   );
