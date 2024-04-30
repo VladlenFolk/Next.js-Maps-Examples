@@ -5,9 +5,10 @@ import type { LngLat } from "ymaps3";
 import { LOCATION } from "@/utils/constants";
 import style from "@/components/Map/Map.module.scss";
 import CustomMarkerWithPopup from "@/components/YMapMarker/YMapMarker";
-import { museums } from "@/utils/places";
+import { museums, theatres } from "@/utils/places";
 import Image from "next/image";
 import { Feature } from "@yandex/ymaps3-types/packages/clusterer";
+import { IClusterMethod } from "@yandex/ymaps3-types/packages/clusterer";
 
 //Данные, получаемые после загрузки скрипта
 const [ymaps3React] = await Promise.all([
@@ -30,14 +31,35 @@ const { YMapClusterer, clusterByGrid } = reactify.module(
 );
 
 export default function Map() {
-  //Функция для кластеризции, чем больше gridSize тем быстрее маркеры схлопнутся
-  const gridSizedMethod = useMemo(() => clusterByGrid({ gridSize: 20 }), []);
+  /*Функция для кластеризции, чем больше gridSize тем быстрее маркеры схлопнутся 
+  (в TS gridSizedMethod вызывает ошибку отключил TS для строки ниже )*/
+  //@ts-ignore
+  const gridSizedMethod = useMemo(() => clusterByGrid({ gridSize: 30 }), []);
 
   //Функция, в которой перебираем места и добавляем нужные поля
-  const points: Feature[] = museums.map((museum) => ({
+  const MuseumPoints: Feature[] = museums.map((museum) => ({
     type: "Feature",
     id: museum.id,
-    geometry: { type: "Point", coordinates:  [museum.coordinates[0], museum.coordinates[1]] },
+    geometry: {
+      type: "Point",
+      coordinates: [museum.coordinates[0], museum.coordinates[1]],
+    },
+    //в properties передаем все данные, необходимые для маркера, например для попапа
+    properties: {
+      name: museum.name,
+      site: museum.site,
+      address: museum.address,
+    },
+  }));
+
+  const TheatresPoints: Feature[] = theatres.map((museum) => ({
+    type: "Feature",
+    id: museum.id,
+    geometry: {
+      type: "Point",
+      coordinates: [museum.coordinates[0], museum.coordinates[1]],
+    },
+    //в properties передаем все данные, необходимые для маркера, например для попапа
     properties: {
       name: museum.name,
       site: museum.site,
@@ -46,9 +68,15 @@ export default function Map() {
   }));
 
   //Функция для создания одиночного маркера
-  const marker = useCallback(
+  const MuseumMarker = useCallback(
     (feature: Feature) => (
-      <YMapMarker key={feature.id} coordinates={feature.geometry.coordinates}>
+      <CustomMarkerWithPopup
+        key={feature.id}
+        coordinates={feature.geometry.coordinates}
+        name={feature.properties?.name}
+        site={feature.properties?.site}
+        address={feature.properties?.address}
+      >
         <Image
           src="/blue-marker.png"
           alt="map-point"
@@ -56,27 +84,70 @@ export default function Map() {
           width={55}
           height={50}
         />
-      </YMapMarker>
+      </CustomMarkerWithPopup>
     ),
     []
   );
 
-  //Функция для создания отдельного кластера
-  const cluster = useCallback((coordinates: LngLat, features: Feature[]) => {
-    return (
-      <YMapMarker
-        key={features[0].id}
-        coordinates={coordinates}
-        source={"my-source"}
+  const TheatreMarker = useCallback(
+    (feature: Feature) => (
+      <CustomMarkerWithPopup
+        key={feature.id}
+        coordinates={feature.geometry.coordinates}
+        name={feature.properties?.name}
+        site={feature.properties?.site}
+        address={feature.properties?.address}
       >
-        <div className="circle">
-          <div className="circle-content">
-            <p className="circle-text">{features.length}</p>
+        <Image
+          src="/green-marker.png"
+          alt="map-point"
+          className={"point"}
+          width={55}
+          height={50}
+        />
+      </CustomMarkerWithPopup>
+    ),
+    []
+  );
+  //Функция для создания отдельного кластера
+  const MuseumCluster = useCallback(
+    (coordinates: LngLat, features: Feature[]) => {
+      return (
+        <YMapMarker
+          key={features[0].id}
+          coordinates={coordinates}
+          source={"museums"}
+        >
+          <div className="circle blue">
+            <div className="circle-content">
+              <p className="circle-text">{features.length}</p>
+            </div>
           </div>
-        </div>
-      </YMapMarker>
-    );
-  }, []);
+        </YMapMarker>
+      );
+    },
+    []
+  );
+
+  const TheatreCluster = useCallback(
+    (coordinates: LngLat, features: Feature[]) => {
+      return (
+        <YMapMarker
+          key={features[0].id}
+          coordinates={coordinates}
+          //в source передаем название кластера
+          source={"theatres"}
+        >
+          <div className="circle green">
+            <div className="circle-content">
+              <p className="circle-text">{features.length}</p>
+            </div>
+          </div>
+        </YMapMarker>
+      );
+    },
+    []
+  );
 
   return (
     <div className={style.mapContainer}>
@@ -85,13 +156,25 @@ export default function Map() {
         <YMapDefaultFeaturesLayer />
         {
           <>
-            <YMapFeatureDataSource id="my-source" />
-            <YMapLayer source="my-source" type="markers" zIndex={1800} />
+            <YMapFeatureDataSource id="museums" />
+            <YMapLayer source="museums" type="markers" zIndex={1800} />
             <YMapClusterer
-              marker={marker}
-              cluster={cluster}
+              marker={MuseumMarker}
+              cluster={MuseumCluster}
               method={gridSizedMethod}
-              features={points}
+              features={MuseumPoints}
+            />
+          </>
+        }
+         {
+          <>
+            <YMapFeatureDataSource id="theatres" />
+            <YMapLayer source="theatres" type="markers" zIndex={1800} />
+            <YMapClusterer
+              marker={TheatreMarker}
+              cluster={TheatreCluster}
+              method={gridSizedMethod}
+              features={TheatresPoints}
             />
           </>
         }

@@ -3,6 +3,7 @@ import style from "@/components/YMapMarker/YMapMarker.module.scss";
 import ReactDOM from "react-dom";
 import React, { useState, useRef } from "react";
 
+
 const [ymaps3React] = await Promise.all([
   ymaps3.import("@yandex/ymaps3-reactify"),
   ymaps3.ready,
@@ -10,7 +11,7 @@ const [ymaps3React] = await Promise.all([
 const reactify = ymaps3React.reactify.bindTo(React, ReactDOM);
 const { YMapMarker } = reactify.module(ymaps3);
 
-const CustomMarkerWithPopup = ({ coordinates, name, site, address }) => {
+const CustomMarkerWithPopup = ({coordinates, name, site, address, children}) => {
   const [popupOpen, setPopupOpen] = useState(false);
 
   const containerRef = useRef();
@@ -54,14 +55,7 @@ const CustomMarkerWithPopup = ({ coordinates, name, site, address }) => {
             <button className={"popup__close"}></button>
           </div>
         )}
-        <Image
-          src="/blue-marker.png"
-          alt="map-point"
-          className={"point"}
-          width={55}
-          height={50}
-          ref={imageRef}
-        />
+        {children}
       </>
     </YMapMarker>
   );
