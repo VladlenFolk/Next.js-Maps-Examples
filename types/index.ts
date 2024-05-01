@@ -25,3 +25,19 @@ export interface Museum {
   coordinates: [number, number];
   address: string;
 }
+
+export interface IPlaces {
+  id: string;
+  name: string;
+  site: string;
+  coordinates: number[];
+  address: string;
+}
+
+export interface IClusterProps {
+  places: IPlaces[];
+  placesType: string;
+  color: string;
+  markerSrc: string;
+  size: number;
+}

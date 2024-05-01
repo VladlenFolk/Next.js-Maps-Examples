@@ -4,7 +4,7 @@ import type { LngLat } from "ymaps3";
 import CustomMarkerWithPopup from "@/components/YMapMarker/YMapMarker";
 import Image from "next/image";
 import { Feature } from "@yandex/ymaps3-types/packages/clusterer";
-
+import { IPlaces, IClusterProps } from "@/types";
 
 //Данные, получаемые после загрузки скрипта
 const [ymaps3React] = await Promise.all([
@@ -18,21 +18,7 @@ const { YMapMarker, YMapLayer, YMapFeatureDataSource } =
 const { YMapClusterer, clusterByGrid } = reactify.module(
   await ymaps3.import("@yandex/ymaps3-clusterer@0.0.1")
 );
-interface IPlaces {
-  id: string;
-  name: string;
-  site: string;
-  coordinates: number[];
-  address: string;
-}
 
-interface IClusterProps {
-  places: IPlaces[];
-  placesType: string;
-  color: string;
-  markerSrc: string;
-  size: number;
-}
 
 export default function YMapCluster({
   places,
