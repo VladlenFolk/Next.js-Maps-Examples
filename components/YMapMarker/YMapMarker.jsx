@@ -1,4 +1,3 @@
-import Image from "next/image";
 import style from "@/components/YMapMarker/YMapMarker.module.scss";
 import ReactDOM from "react-dom";
 import React, { useState, useRef } from "react";
