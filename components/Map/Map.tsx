@@ -5,7 +5,7 @@ import type { LngLat } from "ymaps3";
 import { LOCATION } from "@/utils/constants";
 import style from "@/components/Map/Map.module.scss";
 import CustomMarkerWithPopup from "@/components/YMapMarker/YMapMarker";
-import { museums, theatres } from "@/utils/places";
+import { museums, theatres, parks } from "@/utils/places";
 import Image from "next/image";
 import { Feature } from "@yandex/ymaps3-types/packages/clusterer";
 import { IClusterMethod } from "@yandex/ymaps3-types/packages/clusterer";
@@ -67,6 +67,21 @@ export default function Map() {
     },
   }));
 
+  const ParksPoints: Feature[] = parks.map((museum) => ({
+    type: "Feature",
+    id: museum.id,
+    geometry: {
+      type: "Point",
+      coordinates: [museum.coordinates[0], museum.coordinates[1]],
+    },
+    //в properties передаем все данные, необходимые для маркера, например для попапа
+    properties: {
+      name: museum.name,
+      site: museum.site,
+      address: museum.address,
+    },
+  }));
+
   //Функция для создания одиночного маркера
   const MuseumMarker = useCallback(
     (feature: Feature) => (
@@ -90,6 +105,27 @@ export default function Map() {
   );
 
   const TheatreMarker = useCallback(
+    (feature: Feature) => (
+      <CustomMarkerWithPopup
+        key={feature.id}
+        coordinates={feature.geometry.coordinates}
+        name={feature.properties?.name}
+        site={feature.properties?.site}
+        address={feature.properties?.address}
+      >
+        <Image
+          src="/purple-marker.png"
+          alt="map-point"
+          className={"point"}
+          width={55}
+          height={50}
+        />
+      </CustomMarkerWithPopup>
+    ),
+    []
+  );
+
+  const ParkMarker = useCallback(
     (feature: Feature) => (
       <CustomMarkerWithPopup
         key={feature.id}
@@ -138,6 +174,26 @@ export default function Map() {
           //в source передаем название кластера
           source={"theatres"}
         >
+          <div className="circle purple">
+            <div className="circle-content">
+              <p className="circle-text">{features.length}</p>
+            </div>
+          </div>
+        </YMapMarker>
+      );
+    },
+    []
+  );
+
+  const ParkCluster = useCallback(
+    (coordinates: LngLat, features: Feature[]) => {
+      return (
+        <YMapMarker
+          key={features[0].id}
+          coordinates={coordinates}
+          //в source передаем название кластера
+          source={"parks"}
+        >
           <div className="circle green">
             <div className="circle-content">
               <p className="circle-text">{features.length}</p>
@@ -175,6 +231,18 @@ export default function Map() {
               cluster={TheatreCluster}
               method={gridSizedMethod}
               features={TheatresPoints}
+            />
+          </>
+        }
+         {
+          <>
+            <YMapFeatureDataSource id="parks" />
+            <YMapLayer source="parks" type="markers" zIndex={1800} />
+            <YMapClusterer
+              marker={ParkMarker}
+              cluster={ParkCluster}
+              method={gridSizedMethod}
+              features={ParksPoints}
             />
           </>
         }
