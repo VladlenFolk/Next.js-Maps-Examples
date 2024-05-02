@@ -5,7 +5,6 @@ import CustomMarkerWithPopup from "@/components/YMapMarker/YMapMarker";
 import Image from "next/image";
 import { Feature } from "@yandex/ymaps3-types/packages/clusterer";
 import { IPlaces, IClusterProps } from "@/types";
-import ymapPopup from "@/stores/ymap-popup";
 import { observer } from "mobx-react";
 
 //Данные, получаемые после загрузки скрипта
@@ -23,9 +22,6 @@ const { YMapClusterer, clusterByGrid } = reactify.module(
 
 const YMapCluster = observer(
   ({ places, placesType, markerSrc, color, size }: IClusterProps) => {
-    const { isOpen, setOpen, setClose } = ymapPopup;
-
-    const imageRef = useRef();
 
     /*Функция для кластеризции, чем больше gridSize тем быстрее маркеры схлопнутся 
   (в TS gridSizedMethod вызывает ошибку отключил TS для строки ниже )*/
@@ -67,7 +63,6 @@ const YMapCluster = observer(
             className={"point"}
             width={40}
             height={40}
-            // onClick={setOpen}
           />
         </CustomMarkerWithPopup>
       ),

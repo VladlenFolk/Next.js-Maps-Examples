@@ -46,7 +46,7 @@ const CustomMarkerWithPopup = ({
     };
 
     const handleEsc = (event) => {
-      if (event.code === "Escape") {
+      if (event.code === "Escape" || event.code === "Enter") {
         setPopupOpen(false);
         setClose();
       }
