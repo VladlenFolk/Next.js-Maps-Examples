@@ -7,4 +7,10 @@
     justify-content: space-between;
     padding: 0 80px;
     box-sizing: border-box;
+    &__link{
+        color: black;
+        &_active{
+            color: white;
+        }
+    }
 }
