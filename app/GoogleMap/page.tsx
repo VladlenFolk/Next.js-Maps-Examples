@@ -1,3 +1,5 @@
+import DevelopmentPage from "@/components/DevelopmentPage/DevelopmentPage";
+
 export default function GoogleMap() {
-  return <div>Страница находится на стадии разработки</div>;
+  return <DevelopmentPage />;
 }

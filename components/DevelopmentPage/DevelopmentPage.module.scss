@@ -1,0 +1,21 @@
+.development {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 80px);
+  width: 100vw;
+
+  &__contentContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    font-size: 26px;
+    gap: 30px;
+  }
+
+  &__text {
+    color: black;
+    max-width: 550px;
+  }
+}
