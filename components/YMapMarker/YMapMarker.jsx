@@ -3,6 +3,7 @@ import style from "@/components/YMapMarker/YMapMarker.module.scss";
 import ReactDOM from "react-dom";
 import React, { useState, useRef, useEffect } from "react";
 import ymapPopup from "@/stores/ymap-popup";
+import { observer } from "mobx-react";
 
 const [ymaps3React] = await Promise.all([
   ymaps3.import("@yandex/ymaps3-reactify"),
@@ -11,7 +12,7 @@ const [ymaps3React] = await Promise.all([
 const reactify = ymaps3React.reactify.bindTo(React, ReactDOM);
 const { YMapMarker } = reactify.module(ymaps3);
 
-const CustomMarkerWithPopup = ({
+const CustomMarkerWithPopup = observer (({
   coordinates,
   name,
   site,
@@ -59,7 +60,7 @@ const CustomMarkerWithPopup = ({
       document.addEventListener("keydown", handleEsc);
     };
   }, []);
-
+console.log(popupOpen, isOpen);
   //Если попап открыт, то остальные маркеры удаляются
   if (isOpen && !popupOpen) {
     return null;
@@ -93,6 +94,6 @@ const CustomMarkerWithPopup = ({
       </>
     </YMapMarker>
   );
-};
+});
 
 export default CustomMarkerWithPopup;

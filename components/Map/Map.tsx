@@ -18,17 +18,16 @@ export default function Map() {
   //Замаскировал ошибку, возникающую из-за тега YM
   const realError = console.error;
   console.error = (...error) => {
-    // debugger;
     if (
       error.indexOf(
         "Warning: The tag <ymaps> is unrecognized in this browser. If you meant to render a React component, start its name with an uppercase letter."
       )
     ) {
-      return;
+      return;      
     }
     realError(...error);
   };
-  return (
+  return (   
     <div className={style.mapContainer}>
       <YMap location={LOCATION}>
         <YMapDefaultSchemeLayer />
