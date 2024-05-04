@@ -1,4 +1,9 @@
-.container{
-    max-width: 600px;
-    max-height: 400px;
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40vw;
+  height:calc(40vh + 160px);
+  box-sizing: border-box;
+  margin-top: 80px;
 }

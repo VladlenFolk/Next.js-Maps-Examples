@@ -37,14 +37,14 @@ export default function Map() {
           placesType={"museums"}
           markerSrc={"/blue-marker.png"}
           color={"blue"}
-          size={60}
+          size={40}
         />
         <YMapCluster
           places={theatres}
           placesType={"theatres"}
           markerSrc={"/purple-marker.png"}
           color={"purple"}
-          size={60}
+          size={40}
         />
         <YMapCluster
           places={parks}

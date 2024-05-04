@@ -1,8 +1,9 @@
 import YMapContainer from "@/components/YMapContainer/YMapContainer";
 
-
 export default function YMap() {
   return (
-    <YMapContainer/>
+    <section className="YndexMapContainer">
+      <YMapContainer />
+    </section>
   );
 }
