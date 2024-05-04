@@ -1,4 +1,3 @@
-// 'use client'
 import YMapContainer from "@/components/YMapContainer/YMapContainer";
 
 
