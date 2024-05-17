@@ -1,10 +1,10 @@
-import style from "@/components/Home/Home.module.scss";
+import style from "@/components/Greating/Greating.module.scss";
 
-export default function Home() {
+export default function Greating() {
   return (
-    <section className={style.home}>
-      <h1 className={style.container}>Найдите нужную реализацию карты! </h1>
-      <div>
+    <section className={style.greating}>
+      <h1 className={style.greating__header}>Найдите нужную реализацию карты! </h1>
+      <div className={style.greating__text}>
         Как то пришлось решить задачу - использование Яндекс карт в приложении с
         использованием фреймворка, реализованного на Next.js. Туториалов я не
         нашел, а в доке разобраться заняло не мало времени. Мной было принято
