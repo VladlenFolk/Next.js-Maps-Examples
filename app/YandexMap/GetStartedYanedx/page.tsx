@@ -1,5 +1,4 @@
-export default function GetStartedYandex(){
-    return <>
-    <h1>Начало работы</h1>
-    </>
+import GettingStarted from "@/components/GettingStarted/GettingStarted";
+export default function GetStartedYandex() {
+  return <GettingStarted />;
 }
