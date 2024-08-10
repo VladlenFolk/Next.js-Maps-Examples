@@ -5,7 +5,8 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 export default function Header() {
-  const pathname = usePathname();
+  const pathname: string = usePathname();
+  const isActive = (path: string) => pathname.startsWith(path);
 
   return (
     <header className={style.header}>
@@ -18,9 +19,9 @@ export default function Header() {
         />
       </Link>
       <Link
-        href={"/YandexMap"}
-        className={`${style.header__link} ${
-          pathname === "/YandexMap" ? style.header__link_active : ""
+        href={"/YandexMap/GetStartedYanedx"}
+        className={`${style.header__link}  ${
+          isActive("/YandexMap") ? style.header__link_active : ""
         } `}
       >
         {"Яндекс карты JS API v3"}
@@ -28,7 +29,7 @@ export default function Header() {
       <Link
         href={"/GoogleMap"}
         className={`${style.header__link} ${
-          pathname === "/GoogleMap" ? style.header__link_active : ""
+          isActive("/GoogleMap") ? style.header__link_active : ""
         } `}
       >
         {"Гугл карты"}
@@ -36,7 +37,7 @@ export default function Header() {
       <Link
         href={"/LeafletLibrary"}
         className={`${style.header__link} ${
-          pathname === "/LeafletLibrary" ? style.header__link_active : ""
+          isActive("/LeafletLibrary") ? style.header__link_active : ""
         } `}
       >
         {"Библиотека Leaflet"}

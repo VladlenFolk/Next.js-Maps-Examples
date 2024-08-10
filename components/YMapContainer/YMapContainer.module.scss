@@ -1,9 +1,10 @@
 .container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 40vw;
-  height:calc(40vh + 160px);
+  height: calc(40vh + 160px);
   box-sizing: border-box;
-  margin-top: 80px;
+  display: flex;
+  width: 100%;
+  padding: 0 15%;
+  margin: 3% 0;
+
+
 }
